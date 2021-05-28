@@ -1,0 +1,37 @@
+{
+  "name": "bqr-backend",
+  "version": "1.0.0",
+  "description": "secure rest api backend for bqr",
+  "main": "index.js",
+  "author": "github.com/steamyrain",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.14.2",
+    "@babel/preset-env": "^7.14.2",
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.7"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node ./api/api.js",
+    "nodemon": "nodemon --exec yarn dev"
+  }
+}
