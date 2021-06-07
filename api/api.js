@@ -3,6 +3,7 @@ import express from 'express'
 import helmet from 'helmet'
 import http from 'http'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 
 /**
  * server configuration
@@ -23,7 +24,12 @@ const DB = dbService(environment, config.migrate).start();
 
 // allow cross origin requests
 // configure to only allow requests from certain origins
-app.use(cors());
+const corsOptions = { /* both of these header enables cors set cookie */
+    origin: 'http://localhost:8080', 
+    credentials: true
+}
+
+app.use(cors(corsOptions));
 
 // secure express app
 app.use(helmet({
@@ -35,6 +41,16 @@ app.use(helmet({
 // parsing the request bodys
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// cookie parser
+switch (environment) {
+    case 'development':
+        app.use(cookieParser('secret'))
+        break;
+    default:
+        app.use(cookieParser(process.env.NODE_SEC))
+        break;
+}
 
 // secure your private routes with jwt authentication middleware
 app.all('/private/*', (req, res, next) => auth(req, res, next));
